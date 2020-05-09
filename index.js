@@ -1,17 +1,20 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
+const config = require("config");
+
 const path = require("path");
 
 const items = require("./routes/api/items");
+const users = require("./routes/api/users");
+const auth = require("./routes/api/auth");
 
 const app = express();
 
 // Bodyparser middleware
-app.use(bodyParser.json());
+app.use(express.json());
 
 // DB Config
-const db = require("./config/keys").mongoURI;
+const db = config.get("mongoURI");
 
 // Connect to mongoDB
 mongoose
@@ -26,6 +29,8 @@ mongoose
 
 // Use routes
 app.use("/api/items", items);
+app.use("/api/users", users);
+app.use("/api/auth", auth);
 
 // Serve static assets if in production model
 if (process.env.NODE_ENV === "production") {
