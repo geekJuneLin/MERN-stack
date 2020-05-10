@@ -25,7 +25,6 @@ const LoginModal = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [err, setErr] = React.useState(null);
-  const [authenticated, setAuthenticated] = React.useState(false);
 
   // Display or hide the modal
   const handleShowOnClick = () => {
@@ -60,23 +59,11 @@ const LoginModal = () => {
     };
 
     loginUser(dispatch, user);
-  };
 
-  // Lifecycle
-  React.useEffect(() => {
     if (isAuthenticated) {
-      setAuthenticated(true);
       handleShowOnClick();
-    } else {
-      setAuthenticated(null);
     }
-
-    if (errReducer.id === "LOGIN_FAILED") {
-      setErr(errReducer.msg);
-    } else {
-      setErr(null);
-    }
-  }, [isAuthenticated, errReducer.id]);
+  };
 
   return (
     <>

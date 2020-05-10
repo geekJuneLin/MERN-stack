@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 
 import { ADD_SHOPPING_ITEM } from "../actions/types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Container,
@@ -16,6 +16,7 @@ import {
 const ItemModal = () => {
   // useDispatch hook
   const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.authReducer.isAuthenticated);
 
   // Show hook
   const [show, setShow] = React.useState(false);
@@ -40,9 +41,21 @@ const ItemModal = () => {
   const handleAddItemOnClick = (e) => {
     e.preventDefault();
 
+    const token = localStorage.getItem("token");
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    if (token) {
+      config.headers["x-auth-token"] = token;
+    }
+
     // Send POST request to api
     axios
-      .post("/api/items", { name: name })
+      .post("/api/items", { name: name }, config)
       .then((res) => {
         dispatch({
           type: ADD_SHOPPING_ITEM,
@@ -56,9 +69,14 @@ const ItemModal = () => {
 
   return (
     <Container className="my-4">
-      <Button onClick={handleOnShow} variant="dark">
-        Add item
-      </Button>
+      {isAuth ? (
+        <Button onClick={handleOnShow} variant="dark">
+          Add item
+        </Button>
+      ) : (
+        <h4>Please Login to manage items</h4>
+      )}
+
       <Modal show={show} onHide={handleOnHide} size="lg">
         <Modal.Header closeButton>Add To Shopping List</Modal.Header>
         <ModalBody>
