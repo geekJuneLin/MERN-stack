@@ -3,14 +3,16 @@ const bcrypt = require("bcryptjs");
 const router = express.Router();
 const config = require("config");
 const jwt = require("jsonwebtoken");
+const auth = require("../../middleware/auth");
 
 const User = require("../../models/User");
 
 // @route   POST /api/auth
+// @return  {token, user}
 // @desc    Autheticate the user
 // @access  Public
 router.route("/").post((req, res) => {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
 
   // Validation
   if (!email || !password) {
@@ -42,6 +44,15 @@ router.route("/").post((req, res) => {
       );
     });
   });
+});
+
+// @route   GET /api/auth/user
+// @desc    Get the user info by the provided token
+// @access  Private
+router.route("/user").get(auth, (req, res) => {
+  User.findById(req.user.id)
+    .select("-password")
+    .then((user) => res.json(user));
 });
 
 module.exports = router;
