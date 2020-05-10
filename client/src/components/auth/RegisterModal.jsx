@@ -61,8 +61,6 @@ const RegisterModal = () => {
       password,
     };
     registerUser(newUser, dispatch);
-
-    // setShow(false);
   };
 
   // Listening for errFromReducer
