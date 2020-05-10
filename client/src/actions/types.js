@@ -1,0 +1,16 @@
+export const DELETE_SHOPPING_ITEM = "DELETE_SHOPPING_ITEM";
+export const GET_SHOPPING_ITEMS = "GET_SHOPPING_ITEMS";
+export const ADD_SHOPPING_ITEM = "ADD_SHOPPING_ITEM";
+export const ITEMS_LOADING = "ITEMS_LOADING";
+
+// User Auth & Registration
+export const USER_LOADING = "USER_LOADING";
+export const USER_LOADED = "USER_LOADED";
+export const AUTH_ERROR = "AUTH_ERROR";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILED = "LOGIN_FAILED";
+export const LOGOUT_SUCCES = "LOGOUT_SUCCES";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_FAILED = "REGISTER_FAILED";
+export const GET_ERROR = "GET_ERROR";
+export const CLEAR_ERROR = "CLEAR_ERROR";
